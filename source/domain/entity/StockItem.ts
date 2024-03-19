@@ -14,7 +14,7 @@ export default class StockItem {
     get total(): number {
         let total = 0;
         for (const movement of this.$movements) {
-            total += movement.direction == "in" ? 1 : -1;
+            total += movement.quantityChange;
         }
         return total;
     }
