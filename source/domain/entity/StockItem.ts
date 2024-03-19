@@ -1,3 +1,4 @@
+import { v4 } from "uuid";
 import StockItemEmpty from "../exception/StockItemEmpty";
 import StockDirection from "../types/StockDirection";
 import Item from "./Item";
@@ -7,7 +8,7 @@ export default class StockItem {
 
     protected $movements: Movement[];
 
-    constructor(private item: Item) {
+    constructor(private item: Item, readonly id: string = v4()) {
         this.$movements = [];
     }
 
