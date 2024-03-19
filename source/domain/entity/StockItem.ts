@@ -1,8 +1,9 @@
+import StockItemEmpty from "../exception/StockItemEmpty";
 import StockDirection from "../types/StockDirection";
 import Item from "./Item";
 import Movement from "./Movement";
 
-export default class Stock {
+export default class StockItem {
 
     protected $movements: Movement[];
 
@@ -19,6 +20,7 @@ export default class Stock {
     }
 
     movement(direction: StockDirection): void {
+        if (direction === "out" && this.total <= 0) throw new StockItemEmpty(this.item);
         this.$movements.push(new Movement(direction, this.item.price));
     }
 
