@@ -1,5 +1,6 @@
 import Item from "../source/domain/entity/Item";
 import Order from "../source/domain/entity/Order";
+import InvalidQuantity from "../source/domain/exception/InvalidQuantity";
 
 test("Deve criar um pedido com nenhum item e com valor de R$0,00", function () {
     const order = new Order(1234567);
@@ -27,4 +28,16 @@ test("Deve criar um pedido com dois item e com valor de R$15,00", function () {
     order.add(item1, 1);
     order.add(item2, 1);
     expect(order.total).toBe(15);
+});
+
+test("Não deve permitir a adição de um item sem quantidade", function () {
+    const order = new Order(1234567);
+    const item = new Item(130000, "Coca Lata", 5);
+    expect(() => order.add(item, 0)).toThrow(new InvalidQuantity());
+});
+
+test("Não deve permitir a adição de um item com quantidade negativa", function () {
+    const order = new Order(1234567);
+    const item = new Item(130000, "Coca Lata", 5);
+    expect(() => order.add(item, -1)).toThrow(new InvalidQuantity());
 });
